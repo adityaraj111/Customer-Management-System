@@ -16,6 +16,7 @@ import com.aditya.cms.businessbean.Customer;
 import com.aditya.cms.service.CustomerServiceImpl;
 
 @RestController
+@RequestMapping
 public class CustomerController {
 	
 	@Autowired
@@ -26,7 +27,7 @@ public class CustomerController {
 		return("<h1>Customer Management System</h1>");
 	}
 	
-	@RequestMapping(value = "/cust/controller/getCustById/{id}", method = RequestMethod.GET, 
+	@RequestMapping(value = "/getCustById/{id}", method = RequestMethod.GET, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> getCustomerDetailsById(@PathVariable("id") int myId){
 		Customer customer = customerService.getCustomerDetailsById(myId);
@@ -38,7 +39,7 @@ public class CustomerController {
 		}
 	}
 	
-	@RequestMapping(value = "/cust/controller/addCust", method = RequestMethod.POST,
+	@RequestMapping(value = "/addCust", method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<String> addCustomer(@RequestBody Customer customer){
@@ -47,7 +48,7 @@ public class CustomerController {
 		return new ResponseEntity<String>("Customer added successfully with id: "+id, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/cust/controller/deleteCustById/{id}",
+	@RequestMapping(value = "/deleteCustById/{id}",
 			method = RequestMethod.DELETE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> deleteCustomerById(@PathVariable("id") int myId){
@@ -60,13 +61,14 @@ public class CustomerController {
 		
 	}
 	
-	@RequestMapping(value= "cust/controller/updateCust",
+	@RequestMapping(value= "/updateCust",
 					method = RequestMethod.PUT,
 					consumes = MediaType.APPLICATION_JSON_VALUE,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
 		Customer customerBean = customerService.updateCustomer(customer);
 		if(customerBean == null) {
+			System.out.println("customer bean is NULL");
 			return new ResponseEntity<Customer>(customerBean, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		System.out.println(customer);

@@ -46,7 +46,7 @@ public class CustomerServiceImpl {
 			CustomerEntity customerEntity = customerDAO.getById(customer.getCustomerId());
 			if(customerEntity != null) {
 				//update ops
-				BeanUtils.copyProperties(customerEntity, customer);
+				BeanUtils.copyProperties(customer, customerEntity);
 				customerDAO.save(customerEntity);
 			}
 			customerBean = new Customer();
